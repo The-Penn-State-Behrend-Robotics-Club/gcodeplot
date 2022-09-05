@@ -534,7 +534,15 @@ def getPathsFromSVG(svg):
     def getPaths(paths, matrix, tree, state, savedElements):
         def getFloat(attribute,default=0.):
             try:
-                return float(tree.attrib[attribute].strip())
+                units = re.findall('em|ex|px|in|cm|mm|pt|pc', tree.attrib[attribute].strip())
+                if units == 'cm' :
+                    return float(re.findall('\d+', tree.attrib[attribute].strip())[0] * 10)
+                if units == 'mm' :
+                    return float(re.findall('\d+', tree.attrib[attribute].strip())[0])
+                if units == 'in' :
+                    return float(re.findall('\d+', tree.attrib[attribute].strip())[0] * 25.4)
+
+                return float(re.findall('\d+', tree.attrib[attribute].strip())[0])
             except KeyError:
                 return default
 

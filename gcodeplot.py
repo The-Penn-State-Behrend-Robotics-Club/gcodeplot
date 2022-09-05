@@ -470,7 +470,8 @@ def emitGcode(data, pens = {}, plotter=Plotter(), scalingMode=SCALE_NONE, align 
             penMove(False, plotter.moveSpeed, s.scalePoint(segment[0]))
 
             if newPen and (pen != 1 or pauseAtStart) and not simulation:
-                gcode.append( gcodePause+' load pen: ' + describePen(pens,pen) )
+                #gcode.append( gcodePause+' load pen: ' + describePen(pens,pen) )
+                gcode.append( 'T%i ; load pen: '%(pen) + describePen(pens,pen))
                 penMove(False, plotter.moveSpeed, s.scalePoint(segment[0]), force=True)
             newPen = False
 
